@@ -31,6 +31,9 @@
 
   --display: "Fraunces", georgia, serif;
   --body: "Instrument Sans", system-ui, sans-serif;
+
+  /* Strong curves — built-in CSS easings are too weak to feel intentional. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 html {
@@ -79,6 +82,29 @@ body {
 .hero {
   padding: 72px 0 36px;
 }
+
+/* Page-load sequence: hero children cascade in once, top to bottom. The
+ * snakes slither in right after — one orchestrated entrance, then stillness. */
+.hero > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 500ms var(--ease-out-strong),
+    transform 500ms var(--ease-out-strong);
+}
+
+@starting-style {
+  .hero > * {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.hero > *:nth-child(2) { transition-delay: 60ms; }
+.hero > *:nth-child(3) { transition-delay: 120ms; }
+.hero > *:nth-child(4) { transition-delay: 170ms; }
+.hero > *:nth-child(5) { transition-delay: 220ms; }
+.hero > *:nth-child(6) { transition-delay: 270ms; }
 
 .eyebrow {
   font-family: var(--sc-mono);
@@ -156,11 +182,17 @@ body {
   border-radius: 8px;
   padding: 12px 18px;
   cursor: pointer;
-  transition: border-color 160ms;
+  transition: transform 160ms var(--ease-out-strong), border-color 160ms ease;
 }
 
-.install:hover {
-  border-color: var(--glass-bright);
+@media (hover: hover) and (pointer: fine) {
+  .install:hover {
+    border-color: var(--glass-bright);
+  }
+}
+
+.install:active {
+  transform: scale(0.97);
 }
 
 .install.copied {
@@ -193,8 +225,10 @@ body {
   transition: border-color 200ms;
 }
 
-.terrarium:hover {
-  border-color: var(--glass-bright);
+@media (hover: hover) and (pointer: fine) {
+  .terrarium:hover {
+    border-color: var(--glass-bright);
+  }
 }
 
 .specimen-tag {
@@ -424,8 +458,34 @@ footer.burrow a:hover {
   color: var(--venom);
 }
 
+/* HissTip: scale-fade entrance (never from nothing) + a short glide
+ * between scrub positions instead of teleporting. */
+.sc-hisstip {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 140ms var(--ease-out-strong),
+    transform 140ms var(--ease-out-strong),
+    left 120ms var(--ease-out-strong),
+    top 120ms var(--ease-out-strong);
+}
+
+@starting-style {
+  .sc-hisstip {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* Gentler, not zero: keep the fades, drop the movement. */
+  .hero > *,
+  .sc-hisstip {
+    transform: none;
+    transition-property: opacity;
   }
 }

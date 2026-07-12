@@ -29,7 +29,7 @@ export function HissTip() {
     const row = data[hoverIndex]
     const left = Math.min(Math.max(cursorX + 14, 4), Math.max(4, width - 210))
     return (
-      <div style={{ ...panel, left, top: 30 }}>
+      <div className="sc-hisstip" style={{ ...panel, left, top: 30 }}>
         <div style={{ opacity: 0.65, marginBottom: 5 }}>
           {xKey ? String(row[xKey]) : `#${hoverIndex}`}{" "}
           <span style={{ opacity: 0.7, fontStyle: "italic" }}>sss…</span>
@@ -58,7 +58,7 @@ export function HissTip() {
     const s = slices[hoverSlice]
     const left = Math.min(Math.max(cursor.x + 14, 4), Math.max(4, width - 230))
     return (
-      <div style={{ ...panel, left, top: Math.max(4, cursor.y - 44) }}>
+      <div className="sc-hisstip" style={{ ...panel, left, top: Math.max(4, cursor.y - 44) }}>
         <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
           <Squiggle species={s.species} size={18} />
           <span style={{ opacity: 0.8 }}>{s.label}</span>
