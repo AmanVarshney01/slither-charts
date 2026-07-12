@@ -28,7 +28,7 @@ const OUT = join(ROOT, "r")
 // Where files land in a consumer's project (relative to its root).
 const TARGET_DIR = "components/slither-charts"
 const NS = "@slither-charts"
-const HOMEPAGE = "https://github.com/AmanVarshney01/slither-charts"
+const HOMEPAGE = "https://slither-charts.amanv.dev"
 const AUTHOR = "Aman Varshney"
 
 // GitHub repo backing the zero-config shorthand.

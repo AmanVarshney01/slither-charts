@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "slither-charts",
-  "homepage": "https://github.com/AmanVarshney01/slither-charts",
+  "homepage": "https://slither-charts.amanv.dev",
   "items": [
     {
       "name": "core",

@@ -2,6 +2,8 @@
 
 Composable charts for React where **every mark is a live snake.**
 
+Live terrariums & docs → **[slither-charts.amanv.dev](https://slither-charts.amanv.dev)**
+
 An unhinged homage to [dither-kit](https://www.tripwire.sh/dither-kit) — same
 children-as-config API, same tiny-canvas-engine energy, considerably more
 fangs. Line series slither along your data and rest their heads on the latest

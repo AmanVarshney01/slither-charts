@@ -46,5 +46,6 @@ and a marking pattern (diamonds, bands, dorsal stripe, zigzag). `wiggle={1}`
 is honest, `wiggle={2}` is unhinged. Everything respects
 `prefers-reduced-motion` (the snakes hold a pose).
 
-Docs, live terrariums, and the shadcn-style copy-paste registry:
+Live terrariums → [slither-charts.amanv.dev](https://slither-charts.amanv.dev)
+Sources & the shadcn-style copy-paste registry:
 [github.com/AmanVarshney01/slither-charts](https://github.com/AmanVarshney01/slither-charts)
