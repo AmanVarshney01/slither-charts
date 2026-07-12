@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "worm",
+  "type": "registry:component",
+  "title": "Worm (sparkline)",
+  "description": "Sparkline. Legally a snake, spiritually a worm. Fits in a stat tile, points at your KPI, occasionally flicks its tongue at it. An unhinged homage to dither-kit.",
+  "author": "Aman Varshney",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [
+    "@slither-charts/core"
+  ],
+  "files": [
+    {
+      "path": "components/slither-charts/worm.tsx",
+      "type": "registry:component",
+      "target": "components/slither-charts/worm.tsx",
+      "content": "import { clamp, drawSnake, easeOutCubic, type Pt } from \"./snake-paint\"\nimport { skinOf, type Species } from \"./species\"\nimport { useDimensions, useReducedMotion, useSnakeCanvas } from \"./use-chart\"\n\nexport type WormProps = {\n  /** Just numbers. Worms don't do config objects. */\n  data: number[]\n  species?: Species\n  /** Parent-driven excitement (hover the whole card, the worm notices). */\n  hovered?: boolean\n  wiggle?: number\n  className?: string\n}\n\n/** Sparkline. Legally a snake, spiritually a worm. Fits in a stat tile,\n * points at your KPI, occasionally flicks its tongue at it. */\nexport function Worm({\n  data,\n  species = \"grass\",\n  hovered = false,\n  wiggle = 1,\n  className,\n}: WormProps) {\n  const { ref, size } = useDimensions<HTMLDivElement>()\n  const frozen = useReducedMotion()\n\n  const canvasRef = useSnakeCanvas(size.width, size.height, frozen, (ctx, t) => {\n    if (data.length < 2) return\n    const w = size.width\n    const h = size.height\n    const padX = Math.max(8, w * 0.04)\n    const padY = Math.max(7, h * 0.22)\n    let min = Infinity\n    let max = -Infinity\n    for (const v of data) {\n      if (v < min) min = v\n      if (v > max) max = v\n    }\n    if (min === max) {\n      min -= 1\n      max += 1\n    }\n    const path: Pt[] = data.map((v, i) => ({\n      x: padX + ((w - padX * 2 - 10) * i) / (data.length - 1),\n      y: padY + (h - padY * 2) * (1 - (v - min) / (max - min)),\n    }))\n    const width = clamp(h * 0.17, 3.5, 7)\n    drawSnake(ctx, path, {\n      skin: skinOf(species),\n      width,\n      time: t,\n      seed: (data[0] ?? 0) * 0.13 + data.length * 0.07,\n      reveal: easeOutCubic(clamp(t / 1.4, 0, 1)),\n      hover: hovered ? 1 : 0,\n      wiggleAmp: clamp(width * 0.7, 1.5, 4) * wiggle,\n      wiggleLen: Math.max(30, w / 5),\n      headScale: 0.9,\n      frozen,\n    })\n  })\n\n  return (\n    <div\n      ref={ref}\n      className={className}\n      style={{ position: \"relative\", width: \"100%\", height: \"100%\" }}\n      aria-hidden\n    >\n      {size.width > 0 && (\n        <canvas\n          ref={canvasRef}\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            width: size.width,\n            height: size.height,\n          }}\n        />\n      )}\n    </div>\n  )\n}\n"
+    }
+  ]
+}

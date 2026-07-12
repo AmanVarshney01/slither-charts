@@ -1,0 +1,58 @@
+{
+  "name": "slither-charts",
+  "version": "0.1.0",
+  "description": "Composable React charts where every mark is a live snake. Line snakes, bar cobras, an ouroboros pie, and worm sparklines. An unhinged homage to dither-kit.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Aman Varshney",
+  "homepage": "https://github.com/AmanVarshney01/slither-charts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmanVarshney01/slither-charts.git",
+    "directory": "packages/slither-charts"
+  },
+  "bugs": "https://github.com/AmanVarshney01/slither-charts/issues",
+  "keywords": [
+    "react",
+    "charts",
+    "snakes",
+    "canvas",
+    "meme",
+    "dataviz",
+    "dither-kit",
+    "ouroboros",
+    "sparkline",
+    "zero-legs"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "development": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@slither-charts/config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

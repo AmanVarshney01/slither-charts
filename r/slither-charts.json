@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slither-charts",
+  "type": "registry:component",
+  "title": "slither-charts — Everything",
+  "description": "The whole reptile house: line, bar, pie, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
+  "author": "Aman Varshney",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [
+    "@slither-charts/slither-chart",
+    "@slither-charts/cobra-chart",
+    "@slither-charts/ouroboros-chart",
+    "@slither-charts/worm"
+  ],
+  "files": [
+    {
+      "path": "components/slither-charts/index.ts",
+      "type": "registry:component",
+      "target": "components/slither-charts/index.ts",
+      "content": "// slither-charts — composable charts where every mark is a live snake.\n// Same children-as-config shape as the chart library you were expecting,\n// except the marks blink, slither, and flick their tongues at your data.\n\nexport { SlitherChart, Snake } from \"./slither-chart\"\nexport { CobraChart, Cobra } from \"./cobra-chart\"\nexport { OuroborosChart, Ouroboros } from \"./ouroboros-chart\"\nexport { Worm } from \"./worm\"\nexport { XAxis, YAxis } from \"./axes\"\nexport { Grid } from \"./grid\"\nexport { Legend, Squiggle } from \"./legend\"\nexport { HissTip } from \"./hiss-tip\"\nexport { SPECIES, skinOf, isSpecies } from \"./species\"\nexport type { Species, Skin, SkinPattern } from \"./species\"\nexport type { ChartConfig, SeriesConfig, Row } from \"./chart-context\"\nexport { drawSnake, arcPath, resample } from \"./snake-paint\"\nexport type { SnakeOpts, Pt } from \"./snake-paint\"\n"
+    }
+  ]
+}

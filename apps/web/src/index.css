@@ -1,1 +1,405 @@
 @import "@slither-charts/ui/globals.css";
+
+/* ── the reptile house, after closing time ─────────────────────────────── */
+
+:root {
+  --bog: #0f140f;
+  --bog-deep: #0a0e0a;
+  --terrarium: #151d14;
+  --terrarium-lift: #1a2418;
+  --glass: rgba(196, 211, 182, 0.14);
+  --glass-bright: rgba(196, 211, 182, 0.28);
+  --parchment: #efe9d4;
+  --parchment-dim: #cfcab4;
+  --moss: #97a68f;
+  --moss-dim: #6d7b66;
+  --python: #d9a441;
+  --coral: #e4573d;
+  --coral-gold: #f2c94c;
+  --venom: #a8c256;
+  --ink: #10150f;
+
+  /* chrome hooks the library reads */
+  --sc-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --sc-axis: var(--moss);
+  --sc-axis-line: rgba(196, 211, 182, 0.3);
+  --sc-grid: rgba(196, 211, 182, 0.11);
+  --sc-legend: var(--parchment-dim);
+  --sc-tip-bg: rgba(12, 17, 11, 0.95);
+  --sc-tip-border: var(--glass-bright);
+  --sc-tip-fg: var(--parchment);
+
+  --display: "Fraunces", georgia, serif;
+  --body: "Instrument Sans", system-ui, sans-serif;
+}
+
+html {
+  background: var(--bog);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bog);
+  color: var(--parchment);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--venom);
+  color: var(--ink);
+}
+
+.shed {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── coral-snake banding, used as section rules ────────────────────────── */
+.band {
+  height: 5px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--coral) 0 26px,
+    var(--ink) 26px 33px,
+    var(--coral-gold) 33px 41px,
+    var(--ink) 41px 48px
+  );
+  opacity: 0.85;
+  border: none;
+  margin: 0;
+}
+
+/* ── hero ──────────────────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 0 36px;
+}
+
+.eyebrow {
+  font-family: var(--sc-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--moss);
+  margin: 0 0 18px;
+}
+
+.eyebrow em {
+  color: var(--venom);
+  font-style: normal;
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-size: clamp(52px, 9vw, 108px);
+  font-weight: 470;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+  margin: 0 0 20px;
+  /* Fraunces' organic axes, maxed: soft rounded terminals + wonky angled
+   * strokes. As snakey as type gets while staying legible. */
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+.wordmark .fang {
+  font-style: italic;
+  color: var(--venom);
+}
+
+.tagline {
+  max-width: 560px;
+  font-size: 19px;
+  color: var(--parchment-dim);
+  margin: 0 0 8px;
+}
+
+.tagline a {
+  color: var(--python);
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 164, 65, 0.4);
+  text-underline-offset: 3px;
+}
+
+.tagline a:hover {
+  text-decoration-color: var(--python);
+}
+
+.fine-print {
+  font-family: var(--sc-mono);
+  font-size: 12.5px;
+  color: var(--moss-dim);
+  margin: 0 0 30px;
+}
+
+.install {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--sc-mono);
+  font-size: 13.5px;
+  color: var(--parchment);
+  background: var(--bog-deep);
+  border: 1px solid var(--glass);
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: 40px;
+}
+
+.install .lure {
+  color: var(--moss-dim);
+  user-select: none;
+}
+
+/* ── terrarium cards ───────────────────────────────────────────────────── */
+.terrarium {
+  position: relative;
+  background: var(--terrarium);
+  border: 1px solid var(--glass);
+  border-radius: 12px;
+  padding: 20px 22px 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  transition: border-color 200ms;
+}
+
+.terrarium:hover {
+  border-color: var(--glass-bright);
+}
+
+.specimen-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--sc-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--moss-dim);
+  border-bottom: 1px dashed var(--glass);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.specimen-tag .latin {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: var(--python);
+}
+
+.terrarium h3 {
+  font-family: var(--display);
+  font-size: 23px;
+  font-weight: 500;
+  margin: 0 0 2px;
+  font-variation-settings: "SOFT" 75, "WONK" 1;
+}
+
+.terrarium .note {
+  font-size: 14px;
+  color: var(--moss);
+  margin: 0 0 14px;
+}
+
+.pit {
+  height: 320px;
+}
+
+.pit-tall {
+  height: 380px;
+}
+
+.pit-round {
+  height: 340px;
+}
+
+/* ── layout ────────────────────────────────────────────────────────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  padding: 42px 0;
+}
+
+.gallery .wide {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 820px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-head {
+  padding-top: 56px;
+  margin-bottom: 4px;
+}
+
+.section-head h2 {
+  font-family: var(--display);
+  font-size: 36px;
+  font-weight: 500;
+  margin: 10px 0 6px;
+  font-variation-settings: "SOFT" 75, "WONK" 1;
+}
+
+.section-head p {
+  color: var(--moss);
+  max-width: 620px;
+  margin: 0;
+}
+
+/* ── stat tiles with worms ─────────────────────────────────────────────── */
+.vivarium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  padding-top: 26px;
+}
+
+@media (max-width: 820px) {
+  .vivarium {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-tile .value {
+  font-family: var(--display);
+  font-size: 40px;
+  font-weight: 520;
+  line-height: 1.1;
+}
+
+.stat-tile .label {
+  font-family: var(--sc-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.stat-tile .wormery {
+  height: 56px;
+  margin-top: 10px;
+}
+
+/* ── field guide (api) ─────────────────────────────────────────────────── */
+.field-guide {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 22px;
+  align-items: stretch;
+  padding: 26px 0 10px;
+}
+
+@media (max-width: 900px) {
+  .field-guide {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field-guide .pit-side {
+  height: 100%;
+  min-height: 320px;
+}
+
+.code-plate {
+  background: var(--bog-deep);
+  border: 1px solid var(--glass);
+  border-radius: 12px;
+  padding: 20px 22px;
+  overflow-x: auto;
+}
+
+.code-plate pre {
+  margin: 0;
+  font-family: var(--sc-mono);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--parchment-dim);
+}
+
+.code-plate .k {
+  color: var(--coral);
+}
+
+.code-plate .c {
+  color: var(--moss-dim);
+  font-style: italic;
+}
+
+.code-plate .s {
+  color: var(--python);
+}
+
+.code-plate .t {
+  color: var(--venom);
+}
+
+/* ── species index ─────────────────────────────────────────────────────── */
+.species-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+  padding: 26px 0 10px;
+}
+
+.species-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--terrarium);
+  border: 1px solid var(--glass);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.species-card .who b {
+  display: block;
+  font-family: var(--sc-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.species-card .who span {
+  font-family: var(--sc-mono);
+  font-size: 11px;
+  font-style: italic;
+  color: var(--moss-dim);
+}
+
+/* ── footer ────────────────────────────────────────────────────────────── */
+footer.burrow {
+  margin-top: 72px;
+  padding: 34px 0 56px;
+  border-top: 1px solid var(--glass);
+}
+
+footer.burrow p {
+  font-family: var(--sc-mono);
+  font-size: 12.5px;
+  color: var(--moss-dim);
+  margin: 6px 0;
+}
+
+footer.burrow a {
+  color: var(--moss);
+}
+
+footer.burrow a:hover {
+  color: var(--venom);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

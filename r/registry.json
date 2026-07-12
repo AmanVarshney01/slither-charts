@@ -1,0 +1,155 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "slither-charts",
+  "homepage": "https://github.com/AmanVarshney01/slither-charts",
+  "items": [
+    {
+      "name": "core",
+      "type": "registry:component",
+      "title": "slither-charts — Core",
+      "description": "Shared engine for slither-charts: the canvas snake painter (traveling-wave slither, species skins, blinking eyes, forked tongues), scales, contexts, and the grid/axes/legend/HissTip chrome. Installed automatically by every chart. Zero dependencies, zero legs.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/slither-charts/species.ts",
+          "type": "registry:component",
+          "target": "components/slither-charts/species.ts"
+        },
+        {
+          "path": "components/slither-charts/scales.ts",
+          "type": "registry:component",
+          "target": "components/slither-charts/scales.ts"
+        },
+        {
+          "path": "components/slither-charts/snake-paint.ts",
+          "type": "registry:component",
+          "target": "components/slither-charts/snake-paint.ts"
+        },
+        {
+          "path": "components/slither-charts/use-chart.ts",
+          "type": "registry:component",
+          "target": "components/slither-charts/use-chart.ts"
+        },
+        {
+          "path": "components/slither-charts/chart-context.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/chart-context.tsx"
+        },
+        {
+          "path": "components/slither-charts/cartesian-root.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/cartesian-root.tsx"
+        },
+        {
+          "path": "components/slither-charts/grid.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/grid.tsx"
+        },
+        {
+          "path": "components/slither-charts/axes.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/axes.tsx"
+        },
+        {
+          "path": "components/slither-charts/legend.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/legend.tsx"
+        },
+        {
+          "path": "components/slither-charts/hiss-tip.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/hiss-tip.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slither-chart",
+      "type": "registry:component",
+      "title": "Slither Chart (line)",
+      "description": "Line chart where every series is a live snake slithering along the data, head resting on the latest value. Scrub tooltip with a crosshair mouse the snakes never catch. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/slither-chart.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/slither-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "cobra-chart",
+      "type": "registry:component",
+      "title": "Cobra Chart (bar)",
+      "description": "Bar chart where every bar is a cobra rearing to the exact height of your KPI, hood flared. Grouped series, staggered rise-in. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/cobra-chart.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/cobra-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "ouroboros-chart",
+      "type": "registry:component",
+      "title": "Ouroboros Chart (pie)",
+      "description": "Pie chart as a ring of snakes, each politely biting the next one's tail — the circle that eats itself. Hover to make a slice rear up. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/ouroboros-chart.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/ouroboros-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "worm",
+      "type": "registry:component",
+      "title": "Worm (sparkline)",
+      "description": "Sparkline. Legally a snake, spiritually a worm. Fits in a stat tile, points at your KPI, occasionally flicks its tongue at it. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/worm.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/worm.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slither-charts",
+      "type": "registry:component",
+      "title": "slither-charts — Everything",
+      "description": "The whole reptile house: line, bar, pie, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/slither-chart",
+        "@slither-charts/cobra-chart",
+        "@slither-charts/ouroboros-chart",
+        "@slither-charts/worm"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/index.ts",
+          "type": "registry:component",
+          "target": "components/slither-charts/index.ts"
+        }
+      ]
+    }
+  ]
+}
