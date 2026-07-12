@@ -14,7 +14,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       {
         name: "description",
         content:
-          "A composable React chart library where every mark is a live snake. An unhinged homage to dither-kit.",
+          "Meme charts for React — a composable chart library where every mark is a live snake. Line snakes, bar cobras, an ouroboros pie, worm sparklines.",
       },
     ],
   }),

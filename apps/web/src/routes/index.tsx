@@ -137,12 +137,9 @@ function ReptileHouse() {
           slither-<span className="fang">charts</span>
         </h1>
         <p className="tagline">
-          A composable React chart library where every mark is a live snake.
-          An unhinged homage to{" "}
-          <a href="https://www.tripwire.sh/dither-kit" target="_blank" rel="noreferrer">
-            dither-kit
-          </a>
-          , with the same children-as-config API and considerably more fangs.
+          Meme charts for React — a composable chart library where every mark
+          is a live snake. A completely serious children-as-config API;
+          declare your axes, pick a species, release the reptiles.
         </p>
         <p className="fine-print">
           zero dependencies · zero legs · tongues flick at ~0.45 Hz
