@@ -1,6 +1,6 @@
 {
   "name": "slither-charts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Composable React charts where every mark is a live snake. Line snakes, bar cobras, an ouroboros pie, and worm sparklines. An unhinged homage to dither-kit.",
   "type": "module",
   "license": "MIT",

@@ -4,12 +4,12 @@ import { clamp, drawSnake, easeOutCubic, type Pt } from "./snake-paint"
 import { skinOf, type Species } from "./species"
 import { useSnakeCanvas } from "./use-chart"
 
-/** One bar series = a lineup of cobras rearing out of the axis. The head
- * marks the value; the hood is for drama. */
+/** One bar series = a lineup of snakes rearing out of the axis, heads
+ * marking the value. */
 export function Cobra(_props: {
   dataKey: string
   species?: Species
-  /** 0..1 hood flare. Defaults to full theatrical. */
+  /** 0..1 hood flare for the traditionalists. Off by default. */
   hood?: number
 }) {
   return null
@@ -33,8 +33,8 @@ function CobraCanvas() {
 
     series.forEach((s, j) => {
       const skin = skinOf(s.species)
-      const width = clamp(slot * 0.55, 6, 18)
-      const headLen = Math.max(7, width * 1.9 * 0.85)
+      const width = clamp(slot * 0.45, 5, 12)
+      const headLen = Math.max(7, width * 1.9)
 
       data.forEach((row, i) => {
         const v = row[s.dataKey]
@@ -59,10 +59,10 @@ function CobraCanvas() {
           reveal,
           hover: hoverIndex === i ? 1 : 0,
           dim: c.hoveredKey && c.hoveredKey !== s.dataKey ? 1 : 0,
-          wiggleAmp: clamp(slot * 0.12, 1.5, 4) * c.wiggle,
+          wiggleAmp: clamp(slot * 0.14, 2, 5) * c.wiggle,
           wiggleLen: 50 + width * 2.5,
-          hood: s.hood ?? 0.6,
-          headScale: 0.85,
+          // Hoods retired by popular demand — same look as the line snakes.
+          hood: s.hood ?? 0,
           frozen: c.frozen,
         })
       })

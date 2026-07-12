@@ -82,6 +82,44 @@ type Frame = {
   len: number
 }
 
+/** Densify a sparse polyline into a Catmull-Rom spline through its points —
+ * the body flows through the data instead of cornering at it. */
+function spline(path: Pt[], step: number): Pt[] {
+  if (path.length < 3) return path
+  const out: Pt[] = []
+  for (let i = 0; i < path.length - 1; i++) {
+    const p0 = path[Math.max(0, i - 1)]
+    const p1 = path[i]
+    const p2 = path[i + 1]
+    const p3 = path[Math.min(path.length - 1, i + 2)]
+    const seg = Math.max(
+      2,
+      Math.ceil(Math.hypot(p2.x - p1.x, p2.y - p1.y) / step)
+    )
+    for (let k = 0; k < seg; k++) {
+      const t = k / seg
+      const t2 = t * t
+      const t3 = t2 * t
+      out.push({
+        x:
+          0.5 *
+          (2 * p1.x +
+            (p2.x - p0.x) * t +
+            (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 +
+            (3 * p1.x - 3 * p2.x - p0.x + p3.x) * t3),
+        y:
+          0.5 *
+          (2 * p1.y +
+            (p2.y - p0.y) * t +
+            (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 +
+            (3 * p1.y - 3 * p2.y - p0.y + p3.y) * t3),
+      })
+    }
+  }
+  out.push(path[path.length - 1])
+  return out
+}
+
 /** In-place box smoothing, endpoints pinned. Rounds off data corners so the
  * ribbon doesn't kink at sharp bends. */
 function smoothPath(pts: Pt[], passes: number) {
@@ -105,7 +143,16 @@ function smoothPath(pts: Pt[], passes: number) {
  * wave, recompute normals, assign the tapered width profile. */
 function pose(path: Pt[], o: SnakeOpts): Frame | null {
   const stepPx = 3
-  const [full, fullLen] = resample(path, stepPx)
+  // Sparse input (a data polyline) gets splined first; dense input (an arc)
+  // is already smooth.
+  let smooth = path
+  for (let i = 1; i < path.length; i++) {
+    if (Math.hypot(path[i].x - path[i - 1].x, path[i].y - path[i - 1].y) > 16) {
+      smooth = spline(path, 5)
+      break
+    }
+  }
+  const [full, fullLen] = resample(smooth, stepPx)
   if (full.length < 2 || fullLen < 2) return null
 
   const reveal = clamp(o.reveal, 0.02, 1)
@@ -115,10 +162,13 @@ function pose(path: Pt[], o: SnakeOpts): Frame | null {
   const len = fullLen * reveal
   const ds = len / (raw.length - 1)
 
+  const lambda = o.wiggleLen ?? Math.max(46, o.width * 9)
   const amp = o.noWave
     ? 0
-    : (o.wiggleAmp ?? clamp(o.width * 0.75, 2, 7)) * (1 + (o.hover ?? 0) * 0.9)
-  const lambda = o.wiggleLen ?? Math.max(46, o.width * 9)
+    : Math.min(
+        (o.wiggleAmp ?? clamp(o.width * 0.75, 2, 7)) * (1 + (o.hover ?? 0) * 0.9),
+        lambda * 0.09 // keep the wave a wave, not a sawtooth
+      )
   const omega = o.frozen ? 0 : 2.6 + (o.hover ?? 0) * 2.2
   // While slithering in, the wave travels backward under the body so the
   // snake visibly pushes itself forward.
@@ -145,7 +195,7 @@ function pose(path: Pt[], o: SnakeOpts): Frame | null {
   }
 
   // The wave sharpens corners; soften the final centerline too.
-  smoothPath(pts, 1)
+  smoothPath(pts, 3)
 
   const nx: number[] = new Array(pts.length)
   const ny: number[] = new Array(pts.length)
@@ -166,7 +216,16 @@ function pose(path: Pt[], o: SnakeOpts): Frame | null {
     const body = 0.3 + 0.7 * smoothstep(0, 0.38, u)
     const tailTip = clamp(u / 0.07, 0, 1) ** 0.65
     const neck = 1 - 0.4 * smoothstep(0.92, 1, u)
-    w[i] = (W / 2) * body * tailTip * neck
+    // Cobra hood: the body itself flares just below the head, then necks
+    // back in — a widening of the ribbon, not a shape glued on.
+    let flare = 1
+    if (o.hood) {
+      const dh = len - i * ds // arc distance from the head
+      const env =
+        smoothstep(5 * W, 2.4 * W, dh) * (1 - 0.75 * smoothstep(1.6 * W, 0.3 * W, dh))
+      flare = 1 + o.hood * 1.25 * env
+    }
+    w[i] = (W / 2) * body * tailTip * neck * flare
   }
 
   // Cap the half-width by the local turning radius so the ribbon never
@@ -176,11 +235,11 @@ function pose(path: Pt[], o: SnakeOpts): Frame | null {
     if (da > Math.PI) da = TAU - da
     if (da > 1e-4) {
       const radius = (2 * ds) / da
-      w[i] = Math.min(w[i], radius * 0.75)
+      w[i] = Math.min(w[i], radius * 0.85)
     }
   }
   // Re-smooth widths so the cap doesn't leave dents.
-  for (let p = 0; p < 2; p++)
+  for (let p = 0; p < 5; p++)
     for (let i = 1; i < w.length - 1; i++)
       w[i] = (w[i - 1] + w[i] * 2 + w[i + 1]) / 4
 
@@ -225,13 +284,13 @@ function drawPattern(
       break
     }
     case "zigzag": {
-      const period = Math.max(7, W * 1.1)
+      const period = Math.max(6, W * 0.9)
       const stride = Math.max(1, Math.round(period / ds))
       ctx.beginPath()
       let flip = 1
       for (let i = 0, k = 0; i < n; i += stride, k++) {
         const j = Math.min(i, n - 1)
-        const off = w[j] * 0.45 * flip
+        const off = w[j] * 0.3 * flip
         const x = pts[j].x + nx[j] * off
         const y = pts[j].y + ny[j] * off
         if (k === 0) ctx.moveTo(x, y)
@@ -239,7 +298,7 @@ function drawPattern(
         flip = -flip
       }
       ctx.strokeStyle = skin.marking
-      ctx.lineWidth = Math.max(1.4, W * 0.24)
+      ctx.lineWidth = Math.max(1.3, W * 0.19)
       ctx.lineJoin = "round"
       ctx.stroke()
       break
@@ -306,20 +365,6 @@ function drawHead(
   ctx.save()
   ctx.translate(pe.x, pe.y)
   ctx.rotate(ang)
-
-  // Cobra hood: flared ellipse tucked behind the skull.
-  if (o.hood) {
-    ctx.beginPath()
-    ctx.ellipse(-hl * 0.35, 0, hl * 0.95, (hw / 2) * (1.15 + o.hood * 1.15), 0, 0, TAU)
-    ctx.fillStyle = o.skin.skin
-    ctx.fill()
-    ctx.beginPath()
-    ctx.ellipse(-hl * 0.45, 0, hl * 0.42, hw * 0.4 * o.hood, 0, 0, TAU)
-    ctx.fillStyle = o.skin.marking
-    ctx.globalAlpha *= 0.5
-    ctx.fill()
-    ctx.globalAlpha /= 0.5
-  }
 
   // Skull: a snout-forward egg.
   ctx.beginPath()

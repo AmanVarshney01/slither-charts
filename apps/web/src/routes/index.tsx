@@ -200,8 +200,8 @@ function ReptileHouse() {
             </div>
             <h3>Quarterly cobra report</h3>
             <p className="note">
-              Every bar is a cobra rearing to the exact height of your KPI.
-              Hoods flare on delivery.
+              Every bar is a snake rearing to the exact height of your KPI.
+              They sway while you read.
             </p>
             <div className="pit">
               <CobraChart data={quarterly} config={quarterlyConfig}>
@@ -282,7 +282,7 @@ function ReptileHouse() {
 {"  "}{"<"}<span className="t">Legend</span> /{">"}{"\n"}
 {"  "}{"<"}<span className="t">HissTip</span> /{">"} <span className="c">{"// the tooltip. it hisses."}</span>{"\n"}
 {"  "}{"<"}<span className="t">Snake</span> dataKey=<span className="s">"mice"</span> /{">"}{"\n"}
-{"  "}{"<"}<span className="t">Snake</span> dataKey=<span className="s">"rats"</span> wiggle={"{"}1.6{"}"} /{">"}{"\n"}
+{"  "}{"<"}<span className="t">Snake</span> dataKey=<span className="s">"rats"</span> wiggle={"{"}1.3{"}"} /{">"}{"\n"}
 {"<"}/<span className="t">SlitherChart</span>{">"}
 </code></pre>
           </div>
@@ -290,7 +290,7 @@ function ReptileHouse() {
           <div className="terrarium">
             <div className="specimen-tag">
               <span>live rendering of the code at left</span>
-              <span className="latin">wiggle = 1.6</span>
+              <span className="latin">wiggle = 1.3</span>
             </div>
             <div className="pit-side">
               <SlitherChart
@@ -314,7 +314,7 @@ function ReptileHouse() {
                 <Legend />
                 <HissTip />
                 <Snake dataKey="mice" species="coral" />
-                <Snake dataKey="rats" species="viper" wiggle={1.6} />
+                <Snake dataKey="rats" species="viper" wiggle={1.3} />
               </SlitherChart>
             </div>
           </div>
