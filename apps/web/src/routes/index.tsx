@@ -78,6 +78,27 @@ const legs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 /* ── page ─────────────────────────────────────────────────────────────── */
 
+function InstallCmd({ cmd, note }: { cmd: string; note: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      className={copied ? "install copied" : "install"}
+      title="Click to copy"
+      onClick={() => {
+        navigator.clipboard.writeText(cmd).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1400);
+        });
+      }}
+    >
+      <span className="lure">$</span>
+      <span>{cmd}</span>
+      <span className="lure">{copied ? "✓ copied" : note}</span>
+    </button>
+  );
+}
+
 function StatTile({
   value,
   label,
@@ -126,9 +147,12 @@ function ReptileHouse() {
         <p className="fine-print">
           zero dependencies · zero legs · tongues flick at ~0.45 Hz
         </p>
-        <div className="install">
-          <span className="lure">$</span>
-          <span>bun add slither-charts</span>
+        <div className="install-rack">
+          <InstallCmd cmd="bun add slither-charts" note="npm package" />
+          <InstallCmd
+            cmd="npx shadcn@latest add AmanVarshney01/slither-charts/slither-charts"
+            note="own the sources"
+          />
         </div>
 
         <div className="terrarium">
@@ -231,7 +255,11 @@ function ReptileHouse() {
           <p>
             If you have used a composable chart library, you already know how
             to hold this one. Marks are declared as children; each series is a
-            snake; the species picks the skin.
+            snake; the species picks the skin. Each chart also ships solo on
+            the shadcn registry — <code>slither-chart</code>,{" "}
+            <code>cobra-chart</code>, <code>ouroboros-chart</code>,{" "}
+            <code>worm</code> — and pulls the shared snake engine
+            automatically.
           </p>
         </div>
 

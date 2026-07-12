@@ -137,6 +137,13 @@ body {
   margin: 0 0 30px;
 }
 
+.install-rack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
 .install {
   display: inline-flex;
   align-items: center;
@@ -148,12 +155,31 @@ body {
   border: 1px solid var(--glass);
   border-radius: 8px;
   padding: 12px 18px;
-  margin-bottom: 40px;
+  cursor: pointer;
+  transition: border-color 160ms;
+}
+
+.install:hover {
+  border-color: var(--glass-bright);
+}
+
+.install.copied {
+  border-color: var(--venom);
 }
 
 .install .lure {
   color: var(--moss-dim);
   user-select: none;
+}
+
+.install.copied .lure:last-child {
+  color: var(--venom);
+}
+
+.section-head code {
+  font-family: var(--sc-mono);
+  font-size: 0.9em;
+  color: var(--python);
 }
 
 /* ── terrarium cards ───────────────────────────────────────────────────── */
