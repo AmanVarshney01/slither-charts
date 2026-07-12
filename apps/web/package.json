@@ -26,6 +26,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@prisma/compute-sdk": "^0.34.0",
     "@slither-charts/config": "workspace:*",
     "@tanstack/react-router-devtools": "^1.167.0",
     "@tanstack/router-plugin": "^1.168.19",
