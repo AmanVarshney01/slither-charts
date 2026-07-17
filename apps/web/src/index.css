@@ -280,6 +280,137 @@ body {
   height: 340px;
 }
 
+/* ── the trading floor ─────────────────────────────────────────────────── */
+.exchange {
+  background: var(--bog-deep);
+}
+
+.tape {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--sc-mono);
+  margin-bottom: 6px;
+}
+
+.tape .pair {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--parchment-dim);
+}
+
+.tape .price {
+  font-family: var(--display);
+  font-size: 34px;
+  font-weight: 520;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tape .delta {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.tape .delta.up {
+  color: var(--venom);
+}
+
+.tape .delta.down {
+  color: var(--coral);
+}
+
+.tape .live-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--venom);
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
+.tape .spacer {
+  flex: 1;
+}
+
+.tape .pill {
+  font-size: 11px;
+  color: var(--moss-dim);
+  border: 1px solid var(--glass);
+  border-radius: 6px;
+  padding: 3px 9px;
+  cursor: default;
+}
+
+.tape .pill.active {
+  color: var(--parchment);
+  border-color: var(--glass-bright);
+}
+
+.pit-trade {
+  height: 460px;
+}
+
+.exchange-foot {
+  font-family: var(--sc-mono);
+  font-size: 11.5px;
+  color: var(--moss-dim);
+  border-top: 1px dashed var(--glass);
+  padding-top: 10px;
+  margin: 8px 0 0;
+}
+
+/* ── gauges ────────────────────────────────────────────────────────────── */
+.meter-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.meter {
+  position: relative;
+  height: 100%;
+}
+
+.meter-value {
+  font-family: var(--display);
+  font-size: 34px;
+  font-weight: 520;
+  line-height: 1.05;
+}
+
+.meter-label {
+  font-family: var(--sc-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
 /* ── layout ────────────────────────────────────────────────────────────── */
 .gallery {
   display: grid;

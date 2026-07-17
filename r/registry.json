@@ -132,16 +132,88 @@
       ]
     },
     {
+      "name": "nest-chart",
+      "type": "registry:component",
+      "title": "Nest Chart (scatter)",
+      "description": "Scatter plot where every point is a baby snake coiled up at its coordinates — bubble size makes the coil bigger. Hover a nest to wake one. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/nest-chart.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/nest-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "medusa-chart",
+      "type": "registry:component",
+      "title": "Medusa Chart (radial bars)",
+      "description": "Radial bar chart: snakes radiating from one center, each as long as its value, labels around the rim. An unhinged homage to dither-kit.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/medusa-chart.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/medusa-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "boa-meter",
+      "type": "registry:component",
+      "title": "BoaMeter (gauge)",
+      "description": "Gauge chart: a progress snake chasing its own tail around a dashed track. At 100% it catches it and becomes a full ouroboros. This is called shipping.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/boa-meter.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/boa-meter.tsx"
+        }
+      ]
+    },
+    {
+      "name": "viperstick-chart",
+      "type": "registry:component",
+      "title": "Viperstick Chart (candlestick)",
+      "description": "Candlestick chart for the finance reptiles: one snake per candle (wicks are tails, the fat mid-body spans open→close), volume lane of juveniles, a moving-average trend snake, last-price tag, and a live mode where the newest candle hasn't slept since listing.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@slither-charts/core"
+      ],
+      "files": [
+        {
+          "path": "components/slither-charts/viperstick-chart.tsx",
+          "type": "registry:component",
+          "target": "components/slither-charts/viperstick-chart.tsx"
+        }
+      ]
+    },
+    {
       "name": "slither-charts",
       "type": "registry:component",
       "title": "slither-charts — Everything",
-      "description": "The whole reptile house: line, bar, pie, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
+      "description": "The whole reptile house: line, bar, pie, area, scatter, radial, gauge, candlestick, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
       "dependencies": [],
       "registryDependencies": [
         "@slither-charts/slither-chart",
         "@slither-charts/cobra-chart",
         "@slither-charts/ouroboros-chart",
-        "@slither-charts/worm"
+        "@slither-charts/worm",
+        "@slither-charts/nest-chart",
+        "@slither-charts/medusa-chart",
+        "@slither-charts/boa-meter",
+        "@slither-charts/viperstick-chart"
       ],
       "files": [
         {

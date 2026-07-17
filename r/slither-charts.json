@@ -3,7 +3,7 @@
   "name": "slither-charts",
   "type": "registry:component",
   "title": "slither-charts — Everything",
-  "description": "The whole reptile house: line, bar, pie, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
+  "description": "The whole reptile house: line, bar, pie, area, scatter, radial, gauge, candlestick, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
   "author": "Aman Varshney",
   "dependencies": [],
   "devDependencies": [],
@@ -11,14 +11,18 @@
     "@slither-charts/slither-chart",
     "@slither-charts/cobra-chart",
     "@slither-charts/ouroboros-chart",
-    "@slither-charts/worm"
+    "@slither-charts/worm",
+    "@slither-charts/nest-chart",
+    "@slither-charts/medusa-chart",
+    "@slither-charts/boa-meter",
+    "@slither-charts/viperstick-chart"
   ],
   "files": [
     {
       "path": "components/slither-charts/index.ts",
       "type": "registry:component",
       "target": "components/slither-charts/index.ts",
-      "content": "// slither-charts — composable charts where every mark is a live snake.\n// Same children-as-config shape as the chart library you were expecting,\n// except the marks blink, slither, and flick their tongues at your data.\n\nexport { SlitherChart, Snake } from \"./slither-chart\"\nexport { CobraChart, Cobra } from \"./cobra-chart\"\nexport { OuroborosChart, Ouroboros } from \"./ouroboros-chart\"\nexport { Worm } from \"./worm\"\nexport { XAxis, YAxis } from \"./axes\"\nexport { Grid } from \"./grid\"\nexport { Legend, Squiggle } from \"./legend\"\nexport { HissTip } from \"./hiss-tip\"\nexport { SPECIES, skinOf, isSpecies } from \"./species\"\nexport type { Species, Skin, SkinPattern } from \"./species\"\nexport type { ChartConfig, SeriesConfig, Row } from \"./chart-context\"\nexport { drawSnake, arcPath, resample } from \"./snake-paint\"\nexport type { SnakeOpts, Pt } from \"./snake-paint\"\n"
+      "content": "// slither-charts — composable charts where every mark is a live snake.\n// Same children-as-config shape as the chart library you were expecting,\n// except the marks blink, slither, and flick their tongues at your data.\n\nexport { SlitherChart, Snake } from \"./slither-chart\"\nexport { CobraChart, Cobra } from \"./cobra-chart\"\nexport { OuroborosChart, Ouroboros } from \"./ouroboros-chart\"\nexport { Worm } from \"./worm\"\nexport { NestChart } from \"./nest-chart\"\nexport type { NestChartProps } from \"./nest-chart\"\nexport { MedusaChart } from \"./medusa-chart\"\nexport type { MedusaChartProps } from \"./medusa-chart\"\nexport { BoaMeter } from \"./boa-meter\"\nexport type { BoaMeterProps } from \"./boa-meter\"\nexport { ViperstickChart } from \"./viperstick-chart\"\nexport type { ViperstickChartProps } from \"./viperstick-chart\"\nexport { XAxis, YAxis } from \"./axes\"\nexport { Grid } from \"./grid\"\nexport { Legend, Squiggle } from \"./legend\"\nexport { HissTip } from \"./hiss-tip\"\nexport { SPECIES, skinOf, isSpecies } from \"./species\"\nexport type { Species, Skin, SkinPattern } from \"./species\"\nexport type { ChartConfig, SeriesConfig, Row } from \"./chart-context\"\nexport { drawSnake, arcPath, spiralPath, resample } from \"./snake-paint\"\nexport type { SnakeOpts, Pt } from \"./snake-paint\"\n"
     }
   ]
 }

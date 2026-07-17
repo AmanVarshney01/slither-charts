@@ -16,6 +16,9 @@ export function Snake(_props: {
   species?: Species
   /** Per-snake slither multiplier. */
   wiggle?: number
+  /** "pit" = area chart: the line snake rides a writhing pit of snakes
+   * stacked down to the baseline. Every layer is load-bearing. */
+  variant?: "snake" | "pit"
 }) {
   return null
 }
@@ -89,14 +92,45 @@ function SlitherCanvas() {
       const reveal = easeOutCubic(clamp((t - 0.15 - si * 0.4) / 2.1, 0, 1))
       if (reveal <= 0) return
       const wig = (s.wiggle ?? 1) * c.wiggle
+      const skin = skinOf(s.species)
+      const hovered = c.hoveredKey === s.dataKey ? 1 : 0
+      const dimmed = c.hoveredKey && c.hoveredKey !== s.dataKey ? 1 : 0
+
+      // The pit: understudy snakes stacked between the line and the ground.
+      // Together they read as the fill of an area chart.
+      if (s.variant === "pit") {
+        const layers = clamp(Math.round(c.innerH / (width * 3.2)), 3, 7)
+        for (let k = layers; k >= 1; k--) {
+          const f = k / (layers + 1)
+          const layerPath = path.map((p) => ({
+            x: p.x,
+            y: p.y + (innerH - p.y) * f,
+          }))
+          drawSnake(ctx, layerPath, {
+            skin,
+            width: width * 0.85,
+            time: t,
+            seed: si * 0.37 + k * 0.83,
+            reveal: easeOutCubic(
+              clamp((t - 0.15 - si * 0.4 - k * 0.12) / 2.1, 0, 1)
+            ),
+            hover: 0,
+            dim: Math.max(Number(dimmed), 0.3 + f * 0.45),
+            wiggleAmp: clamp(width * 0.6, 2, 6) * wig,
+            headScale: 0.8,
+            frozen: c.frozen,
+          })
+        }
+      }
+
       drawSnake(ctx, path, {
-        skin: skinOf(s.species),
+        skin,
         width,
         time: t,
         seed: si * 0.37 + 0.21,
         reveal,
-        hover: c.hoveredKey === s.dataKey ? 1 : 0,
-        dim: c.hoveredKey && c.hoveredKey !== s.dataKey ? 1 : 0,
+        hover: hovered,
+        dim: dimmed ? 1 : 0,
         wiggleAmp: clamp(width * 0.75, 2, 7) * wig,
         frozen: c.frozen,
       })

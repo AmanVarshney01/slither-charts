@@ -61,8 +61,9 @@ function CobraCanvas() {
           dim: c.hoveredKey && c.hoveredKey !== s.dataKey ? 1 : 0,
           wiggleAmp: clamp(slot * 0.14, 2, 5) * c.wiggle,
           wiggleLen: 50 + width * 2.5,
-          // Hoods retired by popular demand — same look as the line snakes.
-          hood: s.hood ?? 0,
+          // No default hood — but a species that brings its own (cobra)
+          // still flares, and the prop can force one either way.
+          hood: s.hood,
           frozen: c.frozen,
         })
       })

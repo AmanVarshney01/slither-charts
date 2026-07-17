@@ -33,6 +33,10 @@ export type SnakeOpts = {
   frozen?: boolean
   /** Skip the wave entirely — the path already is the pose (ouroboros). */
   noWave?: boolean
+  /** Override the tail→head width profile (u ∈ 0..1 → width multiplier of
+   * the base half-width). Candles use this for the open/close bulge. The
+   * curvature cap and smoothing still apply. */
+  widthProfile?: (u: number) => number
 }
 
 const TAU = Math.PI * 2
@@ -163,11 +167,15 @@ function pose(path: Pt[], o: SnakeOpts): Frame | null {
   const ds = len / (raw.length - 1)
 
   const lambda = o.wiggleLen ?? Math.max(46, o.width * 9)
+  // Species verve: sidewinders slither bigger no matter what you ask for.
+  const verve = o.skin.verve ?? 1
   const amp = o.noWave
     ? 0
     : Math.min(
-        (o.wiggleAmp ?? clamp(o.width * 0.75, 2, 7)) * (1 + (o.hover ?? 0) * 0.9),
-        lambda * 0.09 // keep the wave a wave, not a sawtooth
+        (o.wiggleAmp ?? clamp(o.width * 0.75, 2, 7)) *
+          verve *
+          (1 + (o.hover ?? 0) * 0.9),
+        lambda * 0.09 * Math.sqrt(verve) // keep the wave a wave, not a sawtooth
       )
   const omega = o.frozen ? 0 : 2.6 + (o.hover ?? 0) * 2.2
   // While slithering in, the wave travels backward under the body so the
@@ -212,6 +220,10 @@ function pose(path: Pt[], o: SnakeOpts): Frame | null {
     ny[i] = tx / tl
     ang[i] = Math.atan2(ty, tx)
     const u = i / (pts.length - 1)
+    if (o.widthProfile) {
+      w[i] = (W / 2) * clamp(o.widthProfile(u), 0.02, 3)
+      continue
+    }
     // Pointy tail → full body → slight neck taper into the head.
     const body = 0.3 + 0.7 * smoothstep(0, 0.38, u)
     const tailTip = clamp(u / 0.07, 0, 1) ** 0.65
@@ -424,12 +436,64 @@ function drawHead(
   ctx.restore()
 }
 
+/** The rattle: shrinking segments trailing off the tail tip. Shakes gently
+ * at rest, violently when hovered — a deprecation warning you can hear. */
+function drawRattle(ctx: CanvasRenderingContext2D, f: Frame, o: SnakeOpts) {
+  const { pts } = f
+  if (pts.length < 4) return
+  const p0 = pts[0]
+  const p1 = pts[3]
+  let bx = p0.x - p1.x
+  let by = p0.y - p1.y
+  const bl = Math.hypot(bx, by) || 1
+  bx /= bl
+  by /= bl
+  const rnx = -by
+  const rny = bx
+  const t = o.frozen ? 0 : o.time
+  const hover = o.hover ?? 0
+  const shakeAmp = 0.5 + hover * 1.9
+  const shakeHz = 13 + hover * 22
+  let cx = p0.x
+  let cy = p0.y
+  for (let i = 0; i < 4; i++) {
+    const r = Math.max(1.3, o.width * (0.3 - i * 0.045))
+    cx += bx * r * 1.75
+    cy += by * r * 1.75
+    // The tip whips more than the base, like a real rattle.
+    const sh =
+      Math.sin(t * shakeHz + i * 1.9 + o.seed * 5) * shakeAmp * ((i + 1) / 4)
+    ctx.beginPath()
+    ctx.ellipse(
+      cx + rnx * sh,
+      cy + rny * sh,
+      r,
+      r * 0.8,
+      Math.atan2(by, bx),
+      0,
+      TAU
+    )
+    ctx.fillStyle = i % 2 ? o.skin.belly : o.skin.marking
+    ctx.fill()
+    ctx.strokeStyle = "rgba(0,0,0,0.35)"
+    ctx.lineWidth = 0.8
+    ctx.stroke()
+  }
+}
+
 /** Lay a snake along `path`. Tail at path[0], head at the reveal frontier. */
 export function drawSnake(
   ctx: CanvasRenderingContext2D,
   path: Pt[],
-  o: SnakeOpts
+  opts: SnakeOpts
 ) {
+  // Species traits fold into the requested pose: anacondas render wider,
+  // cobras bring their own hood unless the chart already flared one.
+  const o: SnakeOpts = {
+    ...opts,
+    width: opts.width * (opts.skin.girth ?? 1),
+    hood: opts.hood ?? opts.skin.hood,
+  }
   const f = pose(path, o)
   if (!f) return
 
@@ -473,8 +537,33 @@ export function drawSnake(
   ctx.lineWidth = 1
   ctx.stroke(body)
 
+  if (o.skin.rattle) drawRattle(ctx, f, o)
   drawHead(ctx, f, o)
   ctx.restore()
+}
+
+/** Coil → polyline: an Archimedean spiral, tail at the center, head at the
+ * rim. This is how a hatchling sits on a scatter plot. `breathe` adds a
+ * slow radial pulse so the nest looks asleep, not dead. */
+export function spiralPath(
+  cx: number,
+  cy: number,
+  r: number,
+  turns = 2.6,
+  phase = 0,
+  breathe = 0,
+  time = 0
+): Pt[] {
+  const steps = Math.max(28, Math.round(turns * 30))
+  const pts: Pt[] = []
+  const puff = breathe ? 1 + Math.sin(time * 1.7 + phase * 5.3) * breathe : 1
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps
+    const a = phase + t * turns * TAU
+    const rr = (1.2 + (r - 1.2) * t) * puff
+    pts.push({ x: cx + Math.cos(a) * rr, y: cy + Math.sin(a) * rr })
+  }
+  return pts
 }
 
 /** Arc → polyline, for the ouroboros. Angles in radians, clockwise. */

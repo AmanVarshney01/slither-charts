@@ -103,10 +103,50 @@ const ITEMS = [
     devDependencies: [],
   },
   {
+    name: "nest-chart",
+    title: "Nest Chart (scatter)",
+    description:
+      "Scatter plot where every point is a baby snake coiled up at its coordinates — bubble size makes the coil bigger. Hover a nest to wake one. An unhinged homage to dither-kit.",
+    files: ["nest-chart.tsx"],
+    registryDependencies: [`${NS}/core`],
+    dependencies: [],
+    devDependencies: [],
+  },
+  {
+    name: "medusa-chart",
+    title: "Medusa Chart (radial bars)",
+    description:
+      "Radial bar chart: snakes radiating from one center, each as long as its value, labels around the rim. An unhinged homage to dither-kit.",
+    files: ["medusa-chart.tsx"],
+    registryDependencies: [`${NS}/core`],
+    dependencies: [],
+    devDependencies: [],
+  },
+  {
+    name: "boa-meter",
+    title: "BoaMeter (gauge)",
+    description:
+      "Gauge chart: a progress snake chasing its own tail around a dashed track. At 100% it catches it and becomes a full ouroboros. This is called shipping.",
+    files: ["boa-meter.tsx"],
+    registryDependencies: [`${NS}/core`],
+    dependencies: [],
+    devDependencies: [],
+  },
+  {
+    name: "viperstick-chart",
+    title: "Viperstick Chart (candlestick)",
+    description:
+      "Candlestick chart for the finance reptiles: one snake per candle (wicks are tails, the fat mid-body spans open→close), volume lane of juveniles, a moving-average trend snake, last-price tag, and a live mode where the newest candle hasn't slept since listing.",
+    files: ["viperstick-chart.tsx"],
+    registryDependencies: [`${NS}/core`],
+    dependencies: [],
+    devDependencies: [],
+  },
+  {
     name: "slither-charts",
     title: "slither-charts — Everything",
     description:
-      "The whole reptile house: line, bar, pie, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
+      "The whole reptile house: line, bar, pie, area, scatter, radial, gauge, candlestick, and sparkline charts where every mark is a live snake, on one tiny canvas engine. An unhinged homage to dither-kit.",
     // The barrel only ships here — it re-exports every chart, so it is only
     // valid when everything is installed.
     files: ["index.ts"],
@@ -115,6 +155,10 @@ const ITEMS = [
       `${NS}/cobra-chart`,
       `${NS}/ouroboros-chart`,
       `${NS}/worm`,
+      `${NS}/nest-chart`,
+      `${NS}/medusa-chart`,
+      `${NS}/boa-meter`,
+      `${NS}/viperstick-chart`,
     ],
     dependencies: [],
     devDependencies: [],

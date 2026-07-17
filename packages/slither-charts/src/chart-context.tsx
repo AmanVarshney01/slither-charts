@@ -14,6 +14,8 @@ export type SeriesDef = {
   wiggle?: number
   /** Cobra hood flare override. 0..1 */
   hood?: number
+  /** "pit" turns a line into an area: a pit of snakes holds the line up. */
+  variant?: "snake" | "pit"
 }
 
 export type Margins = { top: number; right: number; bottom: number; left: number }

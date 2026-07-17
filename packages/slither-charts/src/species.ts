@@ -17,6 +17,15 @@ export type Skin = {
   eye: string
   pupil: string
   tongue: string
+  /* ── traits: things the species DOES, not just wears ── */
+  /** 0..1 permanent hood flare behind the head (cobras). */
+  hood?: number
+  /** Segmented tail rattle; shakes when the snake is excited. */
+  rattle?: boolean
+  /** Body width multiplier (anacondas are load-bearing). */
+  girth?: number
+  /** Slither-amplitude multiplier (sidewinders can't help it). */
+  verve?: number
 }
 
 export type Species =
@@ -27,6 +36,13 @@ export type Species =
   | "viper"
   | "boa"
   | "grass"
+  | "krait"
+  | "cobra"
+  | "rattler"
+  | "milk"
+  | "anaconda"
+  | "sidewinder"
+  | "ghost"
 
 export const SPECIES: Record<Species, Skin> = {
   python: {
@@ -99,6 +115,88 @@ export const SPECIES: Record<Species, Skin> = {
     eye: "#F2E9BE",
     pupil: "#141A08",
     tongue: "#E4573D",
+  },
+  // Deployment blue. Ships to production, sheds on rollback.
+  krait: {
+    latin: "Bungarus deploymentus",
+    skin: "#3671F0",
+    belly: "#9DB9FF",
+    marking: "#1E3F9E",
+    pattern: "stripe",
+    eye: "#DBE6FF",
+    pupil: "#050A18",
+    tongue: "#E4573D",
+  },
+  // Flares its hood at every data point. Loves attention.
+  cobra: {
+    latin: "Naja verticalis",
+    skin: "#8A7A3D",
+    belly: "#D9CC96",
+    marking: "#4A401C",
+    pattern: "plain",
+    eye: "#EFE3AC",
+    pupil: "#181405",
+    tongue: "#E4573D",
+    hood: 0.9,
+  },
+  // Rattles before it bites, like a good deprecation warning.
+  rattler: {
+    latin: "Crotalus deprecatus",
+    skin: "#B99C6B",
+    belly: "#EBDCB8",
+    marking: "#57402A",
+    pattern: "diamonds",
+    eye: "#F2E3B4",
+    pupil: "#1C1206",
+    tongue: "#E4573D",
+    rattle: true,
+  },
+  // Red touches white? That's not a coral. This one's just doing a bit.
+  milk: {
+    latin: "Lampropeltis sus",
+    skin: "#C03A2E",
+    belly: "#F2D8CF",
+    marking: "#181214",
+    marking2: "#F2EFE4",
+    pattern: "bands",
+    eye: "#F7E9DC",
+    pupil: "#170B08",
+    tongue: "#FFB4A0",
+  },
+  // For series that carry the whole dashboard.
+  anaconda: {
+    latin: "Eunectes gigabytus",
+    skin: "#5E7050",
+    belly: "#C4D3B0",
+    marking: "#2C3A24",
+    pattern: "diamonds",
+    eye: "#E9EFCF",
+    pupil: "#101508",
+    tongue: "#3B4A42",
+    girth: 1.7,
+  },
+  // Approaches every value at an angle. Never blocks the main thread.
+  sidewinder: {
+    latin: "Crotalus asynchronous",
+    skin: "#CBB68F",
+    belly: "#F0E6CC",
+    marking: "#8A6F42",
+    pattern: "zigzag",
+    eye: "#F5EBCB",
+    pupil: "#201607",
+    tongue: "#E4573D",
+    verve: 2,
+  },
+  // Albino. Red eyes. Renders your null series with dignity.
+  ghost: {
+    latin: "Serpens undefined",
+    skin: "#E8E0DA",
+    belly: "#FDFBF7",
+    marking: "#C9B8C4",
+    pattern: "plain",
+    eye: "#E4573D",
+    pupil: "#7A1E14",
+    tongue: "#E4A0A0",
   },
 }
 

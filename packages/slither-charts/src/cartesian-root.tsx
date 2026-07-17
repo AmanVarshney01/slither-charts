@@ -58,6 +58,7 @@ function partition(children: ReactNode): {
           : CAST[series.length % CAST.length],
         wiggle: typeof props.wiggle === "number" ? props.wiggle : undefined,
         hood: typeof props.hood === "number" ? props.hood : undefined,
+        variant: props.variant === "pit" ? "pit" : undefined,
       })
       return
     }

@@ -38,12 +38,19 @@ const config = {
 ```
 
 Also in the enclosure: `<CobraChart>` + `<Cobra>` (bars), `<OuroborosChart>`
-+ `<Ouroboros>` (pie), and `<Worm>` (sparkline).
++ `<Ouroboros>` (pie), `<Snake variant="pit">` (area — the line stands on a
+pit of snakes), `<NestChart>` (scatter — every point is a coiled hatchling),
+`<MedusaChart>` (radial bars off one judgmental center), `<BoaMeter>` (a
+gauge snake chasing its own tail; at 100% it catches it), `<ViperstickChart>`
+(candles — green snakes look up, red snakes look down), and `<Worm>`
+(sparkline).
 
 Series colors are **species** — `python`, `coral`, `mamba`, `garter`,
-`viper`, `boa`, `grass` — each with a full skin: scale color, belly sheen,
-and a marking pattern (diamonds, bands, dorsal stripe, zigzag). `wiggle={1}`
-is honest, `wiggle={2}` is unhinged. Everything respects
+`viper`, `boa`, `grass`, `krait`, `cobra`, `rattler`, `milk`, `anaconda`,
+`sidewinder`, `ghost` — each a full skin (scale color, belly sheen, marking
+pattern) and some with **traits**: cobras flare hoods, rattlers shake a tail
+rattle when hovered, anacondas render 1.7× thick, sidewinders slither double.
+`wiggle={1}` is honest, `wiggle={2}` is unhinged. Everything respects
 `prefers-reduced-motion` (the snakes hold a pose).
 
 Live terrariums → [slither-charts.amanv.dev](https://slither-charts.amanv.dev)
