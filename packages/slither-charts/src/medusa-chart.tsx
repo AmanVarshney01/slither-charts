@@ -75,16 +75,19 @@ export function MedusaChart({
   const rOf = (v: number) => r0 + (v / vMax) * (maxR - r0)
 
   const canvasRef = useSnakeCanvas(size.width, size.height, frozen, (ctx, t) => {
+    const width = clamp(((TAU * maxR) / Math.max(1, spokes.length)) * 0.16, 5, 12)
+    // The head reaches past the end of the spine; stop the spine short so
+    // the snout — not the neck — touches the value (and stays off the labels).
+    const headLen = Math.max(7, width * 1.9) * 0.9
     spokes.forEach((s, i) => {
       if (s.value <= 0) return
       const reveal = easeOutCubic(clamp((t - 0.15 - i * 0.09) / 1.2, 0, 1))
       if (reveal <= 0) return
-      const rr = rOf(s.value)
+      const rr = Math.max(r0 * 0.8, rOf(s.value) - headLen * 0.55)
       const path: Pt[] = [
         { x: cx + Math.cos(s.angle) * r0 * 0.4, y: cy + Math.sin(s.angle) * r0 * 0.4 },
         { x: cx + Math.cos(s.angle) * rr, y: cy + Math.sin(s.angle) * rr },
       ]
-      const width = clamp(((TAU * maxR) / spokes.length) * 0.16, 5, 12)
       drawSnake(ctx, path, {
         skin: skinOf(s.species),
         width,
@@ -170,7 +173,7 @@ export function MedusaChart({
             </text>
           )}
           {spokes.map((s, i) => {
-            const lr = maxR + 16
+            const lr = maxR + 28
             const lx = cx + Math.cos(s.angle) * lr
             const ly = cy + Math.sin(s.angle) * lr
             const cos = Math.cos(s.angle)
